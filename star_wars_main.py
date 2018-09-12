@@ -2,14 +2,18 @@ import requests, sys, getopt, pprint
 import species as species
 import person as person
 
-# prompt user to input the character name they want their details for
 def get_char_from_user_input():
+  """
+  prompt user to input the character name they want their details for
+  """
   character = input("Please enter a character name\n")
   # print("user input : " ,character)
   return character
 
-# using the URI given of a certain world , the world name is retrieved and returned from the API
 def get_world(session, uri):
+  """
+  using the URI given of a certain world , the world name is retrieved and returned from the API
+  """
   if uri is None:
     return
   world = session.get(uri).json()
@@ -17,8 +21,10 @@ def get_world(session, uri):
     result_world = world['name']
   return result_world
 
-# using the URI given of a certain species , the species details are retrieved and returned from the API
 def get_species(session, uri):
+  """
+  using the URI given of a certain species , the species details are retrieved and returned from the API
+  """
   if uri is None:
     return
   one_species = session.get(uri).json()
@@ -27,8 +33,10 @@ def get_species(session, uri):
     species_obj = species.Species(one_species['name'],one_species['average_lifespan'],get_world(session, one_species['homeworld']))
     return species_obj
 
-# using the URI given of a film, the film name is retrieved and returned from the API
 def get_film(session, uri):
+  """
+  using the URI given of a film, the film name is retrieved and returned from the API
+  """
   if uri is None:
     return
   film = session.get(uri).json()
@@ -59,9 +67,9 @@ def get_person(character_name):
     return person_obj
   # return result_person
 
-
-
-#Using inline arguments as input
+"""
+Using inline arguments as input
+"""
 cmd_arguments = sys.argv
 input_arguments = cmd_arguments[1:]
 unixOptions = "h:n"
@@ -70,7 +78,6 @@ gnuOptions = ["help", "name="]
 try:
     arguments, values = getopt.getopt(input_arguments, unixOptions, gnuOptions)
 except getopt.error as err:
-    # output error, and return with an error code
     print (str(err))
     sys.exit(2)
 
@@ -81,7 +88,7 @@ for currentArgument, currentValue in arguments:
       print (("Fetching character details for (%s)") % (currentValue))
       character_name = currentValue
 
-#If character name was not written in the command, the user is prompted to input it to retrieve the character details
+# If character name was not written in the command, the user is prompted to input it to retrieve the character details
 if(len(sys.argv) == 1):
   character_name = get_char_from_user_input()
 person_details = get_person(character_name)

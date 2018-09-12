@@ -1,5 +1,7 @@
-#class stores details of species that have been recieved from the API
 class Species:
+  """
+  class stores details of species that have been recieved from the API
+  """
 
   def __init__(self,name=None,avg_lifespan=None,homeworld=None):
     self.name = name

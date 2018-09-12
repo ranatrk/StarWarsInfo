@@ -1,7 +1,9 @@
 import species as species
 
-#Class stores details of the character that have been recieved from the API
 class Person():
+  """
+  Class stores details of the character that have been recieved from the API
+  """
 
   def __init__(self,name,gender):
     self.name = name
@@ -24,12 +26,16 @@ class Person():
   def __repr__(self):
     return self.__str__()
 
-  # Adding a species object to the species list of the person
   def add_species(self,new_species):
+    """
+    Adding a species object to the species list of the person
+    """
     self.species.append(new_species)
 
-  #Add a film/movie the person appeared in to the list of films they have appeared in
   def add_film(self,film):
+    """
+    Add a film/movie the person appeared in to the list of films they have appeared in
+    """
     self.films.append(film)
 
 
