@@ -2,11 +2,13 @@ import requests, sys, getopt, pprint
 import species as species
 import person as person
 
+# prompt user to input the character name they want their details for
 def get_char_from_user_input():
   character = input("Please enter a character name\n")
   # print("user input : " ,character)
   return character
 
+# using the URI given of a certain world , the world name is retrieved and returned from the API
 def get_world(session, uri):
   if uri is None:
     return
@@ -15,6 +17,7 @@ def get_world(session, uri):
     result_world = world['name']
   return result_world
 
+# using the URI given of a certain species , the species details are retrieved and returned from the API
 def get_species(session, uri):
   if uri is None:
     return
@@ -24,6 +27,7 @@ def get_species(session, uri):
     species_obj = species.Species(one_species['name'],one_species['average_lifespan'],get_world(session, one_species['homeworld']))
     return species_obj
 
+# using the URI given of a film, the film name is retrieved and returned from the API
 def get_film(session, uri):
   if uri is None:
     return
@@ -32,6 +36,7 @@ def get_film(session, uri):
     result_film = film['title']
   return result_film
 
+# Given a character name  , the person details are retrieved and returned from the API. Multiple API calls are used accordingly
 def get_person(character_name):
   base_url = "https://swapi.co/api/people/"
   session = requests.Session()
@@ -53,7 +58,7 @@ def get_person(character_name):
 
 
 
-
+#Using inline arguments as input
 cmd_arguments = sys.argv
 input_arguments = cmd_arguments[1:]
 unixOptions = "h:n"
@@ -73,6 +78,7 @@ for currentArgument, currentValue in arguments:
       print (("Fetching character details for (%s)") % (currentValue))
       character_name = currentValue
 
+#If character name was not written in the command, the user is prompted to input it to retrieve the character details
 if(len(sys.argv) == 1):
   character_name = get_char_from_user_input()
 person_details = get_person(character_name)
