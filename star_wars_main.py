@@ -36,14 +36,17 @@ def get_film(session, uri):
     result_film = film['title']
   return result_film
 
-# Given a character name  , the person details are retrieved and returned from the API. Multiple API calls are used accordingly
 def get_person(character_name):
-  base_url = "https://swapi.co/api/people/"
+  """
+  Given a character name  , the person details are retrieved and returned from the API. Multiple API calls are used accordingly
+  """
+  base_url = "https://swapi.co/api/people/?search="
   session = requests.Session()
 
-  all_people = session.get(base_url).json()
-  one_person =   next((person for person in all_people["results"] if person['name'] == character_name), None)
-  if one_person is not None:
+  one_person = session.get(base_url+character_name).json()['results']
+  # one_person =   next((person for person in all_people["results"] if person['name'] == character_name), None)
+  if one_person is not None and len(one_person)>0 :
+    one_person = one_person[0]
     person_obj = person.Person(one_person['name'], one_person['gender'])
     if one_person['species'] is not None:
       for single_species in one_person['species']:
